@@ -1,13 +1,10 @@
 #Import median household income data for Birmingham
 library(readr)
-raw_ACS_data <- read_csv("~/Documents/Data/Birmingham/Birmingham/ACS_15_1YR_S1903_with_ann.csv")
-View(median_household_income)
+raw_ACS_data <- read_csv("~/Documents/Github/BirminghamGentrification/ACS_15_1YR_S1903_with_ann.csv")
 
 library(readxl)
-Bham_Median_HH_Income <- read_excel("~/Documents/Data/Birmingham/Birmingham/Bham_Median_HH_Income.xlsx")
-View(Bham_Median_HH_Income)
-Bham_MarginofError <- read_excel("~/Documents/Data/Birmingham/Birmingham/Bham_Median_HH_Income_MarginofError.xlsx")
-View(Bham_MarginofError)
+Bham_Median_HH_Income <- read_excel("~/Documents/Github/BirminghamGentrification/Bham_Median_HH_Income.xlsx")
+Bham_MarginofError <- read_excel("~/Documents/Github/BirminghamGentrification/Bham_Median_HH_Income_MarginofError.xlsx")
 
 install.packages("ggplot2")
 library(ggplot2)
@@ -61,13 +58,14 @@ install.packages("tidycensus")
 install.packages("tidyverse")
 library("tidycensus")
 library("tidyverse")
+library("leaflet")
+library("sf")
+library("stringr")
+library("viridis")
+library("viridisLite")
 
 census_api_key("c2d75e7e54dd23544e0d77f8d8b98819f00ccbb3", install=TRUE)
 readRenviron("~/.Renviron")
-
-m2015 <- get_acs(geography = "county", variables = "B01003_001",
-                 state="AL", geometry=TRUE)
-m2015
 
 Jeff_home_value <- get_acs(geography = "tract", 
                      variables = "B25077_001", 
@@ -149,12 +147,46 @@ Jeff_HH_income15 %>%
             labFormat = labelFormat(prefix = "$"),
             opacity = 1)
 
-#do same for year 200 using decennial survey
+
 #comptute percentage change from 2010 to 2015
 
-Jeff_HH_income10$Year <- 2010
-Jeff_HH_income15$Year <- 2015
-Jeff_HH_income_facet <- rbind.data.frame(Jeff_HH_income10,
-                                         Jeff_HH_income15)
+#sort tables for computation
+Jeff_HH_income10 <- Jeff_HH_income10[order(Jeff_HH_income10$GEOID),]
+Jeff_HH_income15 <- Jeff_HH_income15[order(Jeff_HH_income15$GEOID),]
 
+#compute percentage change
+Jeff_HH_income15$estimate2010 <- Jeff_HH_income10$estimate
+Jeff_HH_income15$percent_change <- ((Jeff_HH_income15$estimate -
+                     Jeff_HH_income15$estimate2010)/Jeff_HH_income15$estimate2010)*100
 
+#check to make sure geometry column is of object class "sf" in order for
+#st_transform to be able to map coordinates to map
+class(Jeff_HH_income15)
+#checks out okay
+
+#create map of percentage change in median household income values
+#from 2010 to 2015
+pal <- colorNumeric(palette = "viridis", 
+                    domain = Jeff_HH_income15$percent_change)
+
+Jeff_HH_income15 %>%
+  st_transform(crs = "+init=epsg:4326") %>%
+  leaflet(width = "100%") %>%
+  addProviderTiles(provider = "CartoDB.Positron") %>%
+  addPolygons(popup = ~ str_extract(percent_change, "^([^,]*)"),
+              stroke = FALSE,
+              smoothFactor = 0,
+              fillOpacity = 0.7,
+              color = ~ pal(percent_change)) %>%
+  addLegend("bottomright", 
+            pal = pal, 
+            values = ~ percent_change,
+            title = "Percentage Change Median Household Income",
+            labFormat = labelFormat(prefix = "%"),
+            opacity = 1)
+
+#Interest. Growing neighbordhoods like Avondale, Highland park,
+#and 1st Ave North have positive percentage change.
+#Meanwhile, each of these neighborhoods has an adjacent neighborhood that has
+#experience a strong negetive percentage change.These neighborhoods are 
+#primarily Oak Ridge Park, Graymont, and Irondale.
