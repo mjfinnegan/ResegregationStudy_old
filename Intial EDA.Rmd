@@ -2,14 +2,15 @@
 title: "Initial EDA"
 author: "Mike Finnegan"
 date: "8/28/2017"
-output: html_document
+output: github_document
+always_allow_html: yes
 ---
 
 ### ACS Median Household Income Data for Birmingham-Hoover MSA
 After first importing data in from an excel file holding data taken from the ACS, I create a few graphs showing how median household income varies by race and age in the Birmingham-Hoover MSA.
 
 #### Import Data extracted from ACS via Excel
-```{r}
+```{r Import Raw Data}
 library(readxl)
 Bham_Median_HH_Income <- read_excel("~/Documents/Github/BirminghamGentrification/Bham_Median_HH_Income.xlsx")
 Bham_MarginofError <- read_excel("~/Documents/Github/BirminghamGentrification/Bham_Median_HH_Income_MarginofError.xlsx")
@@ -18,7 +19,7 @@ Bham_Median_HH_Income$Year <- as.factor(Bham_Median_HH_Income$Year)
 
 
 #### Plot Median Household Incomes from 2005 to 2015
-```{r fig.cap = "Overall Household Income for Birmingham-Hoover MSA."}
+```{r Plot Overall Median HH Income ,fig.cap = "Overall Household Income for Birmingham-Hoover MSA."}
 library(ggplot2)
 
 #Plot line chart Overall Household Income for Birmingham-Hoover MSA
@@ -31,7 +32,7 @@ ggplot(Bham_Median_HH_Income, aes(x=Year,`Overall Households`, group=1)) +
 The 2008 Recession stunts what appears to be significant growth occuring betwen years 2005 and 2008, essentially putting the Birmingham area's median household income level back 5 years (nota bene: compare 2010 and 2005). However, post-recession median household income has risen steadily with the largest growth in the most recent year for which data is available. Intuition from living in the area tells us that this rate of growth may have continued to increase in the past year and a half.
   
 #### Race and Age 
-```{r fig.cap = "Median Household Income by Race."}  
+```{r Plot by Race,fig.cap = "Median Household Income by Race."}  
 #Plot Median Household Income by Race
 ggplot(Bham_Median_HH_Income, aes(x=Year, group=1)) +
   geom_line(aes(y=`Overall Households`, colour="Overall")) +
@@ -46,7 +47,7 @@ ggplot(Bham_Median_HH_Income, aes(x=Year, group=1)) +
 ```  
 Looking at the graph we can see that in the 2005 to 2010 time from the median income of white households has risen by roughly $10k, while the median income of black households has risen by approximately $5k. However, the two groups' levels of income have moved in roughly the same manner. Meanwhile, the median income for Hispanic households is largely volatile and non-cyclical in relation to broader economic treads. 
 
-```{r fig.cap = "Median Houshold Income by Age."}
+```{r Plot by Age, fig.cap = "Median Houshold Income by Age."}
 #Plot Median Household Income for Age
 ggplot(Bham_Median_HH_Income, aes(x=Year, group=1)) +
   geom_line(aes(y=`Overall Households`, colour="Overall")) +
@@ -67,7 +68,7 @@ We would expect to see an increase in median household incomes for age groups 15
 In this section I begin visualizing the changes in Median Household Income within the Birmingham metropolitan area (specifically Jefferson County). By utilzing the tidycensus package, I use an api to directly access ACS data from the 2010 and 2015 surveys. From there I use leaflet amongst other packages to create a map of Jefferson county. The 2010 and 2015 maps are displayed, but the focus of this section is the percent change in median household income, i.e. the last map shown.
 
 ##### Install necessary packages
-```{r warning = FALSE, message =  FALSE}
+```{r packages,warning = FALSE, message =  FALSE}
 #Begin work with tidycensus
 library("tidycensus")
 library("tidyverse")
@@ -80,14 +81,14 @@ library("viridisLite")
 
 
 ##### Link api key
-```{r warning = FALSE}
+```{r api key, warning = FALSE}
 #census_api_key("c2d75e7e54dd23544e0d77f8d8b98819f00ccbb3", install=TRUE)
 readRenviron("~/.Renviron")
 ```
 
 #### Jefferson County in 2010
 The code in order to produce the map is shown here for the reader's interest and for the sake of reproducibility. Due to length and redundancy reasons, the code to create maps will not be included for the ones following this. The code begins by using the get_acs function to pull and create the data set we want. From there I transform the coordinates of each census tract included in the ACS dataset to a workable format and then create a legend box showing the values associated with the color scale.
-```{r warning = FALSE, message = FALSE, fig.cap = "2010 Jefferson County Median Household Income by Census Tract."}
+```{r Pull data and create map, warning = FALSE, message = FALSE, fig.cap = "2010 Jefferson County Median Household Income by Census Tract."}
 #load variables table to find relevant ACS table
 #v15 <- load_variables(2015, "acs5", cache = TRUE)
 #View(v15)
@@ -120,7 +121,7 @@ Jeff_HH_income10 %>%
 ```
 
 #### Jefferson County in 2015
-```{r warning = FALSE, echo = FALSE, message =  FALSE, fig.cap = "2015 Jefferson County Median Household Income by Census Tract."}
+```{r Map Median HH Income for 2015, warning = FALSE, echo = FALSE, message =  FALSE, fig.cap = "2015 Jefferson County Median Household Income by Census Tract."}
 Jeff_HH_income15 <- get_acs(geography = "tract", 
                           variables = "B19013_001E",
                           endyear=2015,
@@ -149,7 +150,7 @@ Jeff_HH_income15 %>%
 ```
 
 ##### Prepare Data for Percent Change in Median Household Income
-```{r message = FALSE, results = 'hide'}
+```{r Calculate Percent Change, message = FALSE, results = 'hide'}
 #sort tables for computation
 Jeff_HH_income10 <- Jeff_HH_income10[order(Jeff_HH_income10$GEOID),]
 Jeff_HH_income15 <- Jeff_HH_income15[order(Jeff_HH_income15$GEOID),]
@@ -166,7 +167,7 @@ class(Jeff_HH_income15)
 ```
 
 #### Percent Change Map
-```{r warnings = FALSE, echo = FALSE, message = FALSE, fig.cap = "Percentage Change in Median Household Income from 2010 to 2015 by Census Tract."}
+```{r  %change map, warnings = FALSE, echo = FALSE, message = FALSE, fig.cap = "Percentage Change in Median Household Income from 2010 to 2015 by Census Tract."}
 #create map of percentage change in median household income values
 #from 2010 to 2015
 pal <- colorNumeric(palette = "viridis", 
@@ -188,7 +189,11 @@ Jeff_HH_income15 %>%
             labFormat = labelFormat(prefix = "%"),
             opacity = 1)
 ```
-The map above detailing the percent change in median household income from 2010 to 2015 provides some insight. As one would expect, growing neighbordhoods like Avondale, Highland park,and 1st Ave North have positive percentage change. However, each of these neighborhoods has an adjacent neighborhood that has experienced a strong negetive percentage change.These neighborhoods are primarily Oak Ridge Park, Graymont, and Irondale.
+The map above detailing the percent change in median household income from 2010 to 2015 provides some insight. As one would expect, growing neighbordhoods like Avondale, Highland park,and 1st Ave North have positive percentage change. However, each of these neighborhoods has an adjacent neighborhood that has experienced a strong negetive percentage change. These neighborhoods are primarily Oak Ridge Park, Graymont, and Irondale.
 
 One possible explanation for this phenomenon could be that resources flowing into the growing census tracts are disproportionately coming from certain adjacent census tracts, which are those that are seen having experienced large negative declines in median household income. Another perspective of this same explanation is that the low-income households being forced out of the growing neigborhoods are concentrating themselves in the declining household income census tracts.
+
+Further questions from this are:
+  1) If low-income households are concentrating in particular neighborhoods, what factors are driving this concentration? Following this, what are the characteristics of these neighborhoods
+  2) Similarly, what are the characteristics of the growing neighborhoods? What is the marginal effect of the presence of a brewery? Is there a necessary time period the brewery must be open before other business open around it?
 
