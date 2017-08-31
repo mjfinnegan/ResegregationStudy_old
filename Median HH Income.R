@@ -190,3 +190,255 @@ Jeff_HH_income15 %>%
 #Meanwhile, each of these neighborhoods has an adjacent neighborhood that has
 #experience a strong negetive percentage change.These neighborhoods are 
 #primarily Oak Ridge Park, Graymont, and Irondale.
+
+
+
+Jeff_wages15 <- get_acs(geography = "tract", 
+                           variables = "B19052_001E", 
+                           endyear=2015,
+                           state = "AL",
+                           county = "Jefferson County",
+                           geometry = TRUE)
+View(Jeff_wages15)
+
+pal <- colorNumeric(palette = "viridis", 
+                    domain = Jeff_wages15$estimate)
+
+Jeff_wages15 %>%
+  st_transform(crs = "+init=epsg:4326") %>%
+  leaflet(width = "100%") %>%
+  addProviderTiles(provider = "CartoDB.Positron") %>%
+  addPolygons(popup = ~ str_extract(estimate, "^([^,]*)"),
+              stroke = FALSE,
+              smoothFactor = 0,
+              fillOpacity = 0.7,
+              color = ~ pal(estimate)) %>%
+  addLegend("bottomright", 
+            pal = pal, 
+            values = ~ estimate,
+            title = "2015 Wages",
+            labFormat = labelFormat(prefix = "$"),
+            opacity = 1)
+
+#Transition to QCEW analysis
+
+library(blsAPI)
+Q4Y16 <- blsQCEW('Area', year='2016', quarter='4', area='01073')
+#NAICS codes:
+#all- 10 & own_code=5
+#breweries- 31212
+#restaurants and bars-722 & own_code=5
+
+#For Q4Y16i
+Q4Y16 <- blsQCEW('Area', year='2016', quarter='4', area='01073')
+Q4Y16i <- rbind(
+  subset(Q4Y16, industry_code==10 & own_code==5),
+  subset(Q4Y16, industry_code==31212),
+  subset(Q4Y16, industry_code==722 & own_code==5),
+  subset(Q4Y16, industry_code==72233 & own_code==5))
+
+#For Q3Y16i
+Q3Y16 <- blsQCEW('Area', year='2016', quarter='3', area='01073')
+Q3Y16i <- rbind(
+            subset(Q3Y16, industry_code==10 & own_code==5),
+            subset(Q3Y16, industry_code==31212),
+            subset(Q3Y16, industry_code==722 & own_code==5),
+            subset(Q3Y16, industry_code==72233 & own_code==5))
+
+#For Q2Y16i
+Q2Y16 <- blsQCEW('Area', year='2016', quarter='2', area='01073')
+Q2Y16i <- rbind(
+  subset(Q2Y16, industry_code==10 & own_code==5),
+  subset(Q2Y16, industry_code==31212),
+  subset(Q2Y16, industry_code==722 & own_code==5),
+  subset(Q2Y16, industry_code==72233 & own_code==5))
+
+Q4Y16 <- blsQCEW('Area', year='2016', quarter='4', area='01073')
+Q3Y16 <- blsQCEW('Area', year='2016', quarter='3', area='01073')
+Q2Y16 <- blsQCEW('Area', year='2016', quarter='2', area='01073')
+Q1Y16 <- blsQCEW('Area', year='2016', quarter='1', area='01073')
+
+#For Q1Y16i
+Q1Y16i <- rbind(
+        subset(Q1Y16, industry_code==10 & own_code==5),
+        subset(Q1Y16, industry_code==31212),
+        subset(Q1Y16, industry_code==722 & own_code==5),
+        subset(Q1Y16, industry_code==72233 & own_code==5))
+y16i <- rbind(Q4Y16i,Q3Y16i,Q2Y16i,Q1Y16i)
+
+Q4Y15 <- blsQCEW('Area', year='2015', quarter='4', area='01073')
+Q3Y15 <- blsQCEW('Area', year='2015', quarter='3', area='01073')
+Q2Y15 <- blsQCEW('Area', year='2015', quarter='2', area='01073')
+Q1Y15 <- blsQCEW('Area', year='2015', quarter='1', area='01073')
+
+Q4Y15i <- rbind(
+  subset(Q4Y15, industry_code==10 & own_code==5),
+  subset(Q4Y15, industry_code==31212),
+  subset(Q4Y15, industry_code==722 & own_code==5),
+  subset(Q4Y15, industry_code==72233 & own_code==5))
+Q3Y15i <- rbind(
+  subset(Q3Y15, industry_code==10 & own_code==5),
+  subset(Q3Y15, industry_code==31212),
+  subset(Q3Y15, industry_code==722 & own_code==5),
+  subset(Q3Y15, industry_code==72233 & own_code==5))
+Q2Y15i <- rbind(
+  subset(Q2Y15, industry_code==10 & own_code==5),
+  subset(Q2Y15, industry_code==31212),
+  subset(Q2Y15, industry_code==722 & own_code==5),
+  subset(Q2Y15, industry_code==72233 & own_code==5))
+Q1Y15i <- rbind(
+  subset(Q1Y15, industry_code==10 & own_code==5),
+  subset(Q1Y15, industry_code==31212),
+  subset(Q1Y15, industry_code==722 & own_code==5),
+  subset(Q1Y15, industry_code==72233 & own_code==5))
+y15i <- rbind(Q4Y15i,Q3Y15i,Q2Y15i,Q1Y15i)
+
+
+
+Q4Y14 <- blsQCEW('Area', year='2014', quarter='4', area='01073')
+Q3Y14 <- blsQCEW('Area', year='2014', quarter='3', area='01073')
+Q2Y14 <- blsQCEW('Area', year='2014', quarter='2', area='01073')
+Q1Y14 <- blsQCEW('Area', year='2014', quarter='1', area='01073')
+
+Q4Y14i <- rbind(
+  subset(Q4Y14, industry_code==10 & own_code==5),
+  subset(Q4Y14, industry_code==31212),
+  subset(Q4Y14, industry_code==722 & own_code==5),
+  subset(Q4Y14, industry_code==72233 & own_code==5))
+Q3Y14i <- rbind(
+  subset(Q3Y14, industry_code==10 & own_code==5),
+  subset(Q3Y14, industry_code==31212),
+  subset(Q3Y14, industry_code==722 & own_code==5),
+  subset(Q3Y14, industry_code==72233 & own_code==5))
+Q2Y14i <- rbind(
+  subset(Q2Y14, industry_code==10 & own_code==5),
+  subset(Q2Y14, industry_code==31212),
+  subset(Q2Y14, industry_code==722 & own_code==5),
+  subset(Q2Y14, industry_code==72233 & own_code==5))
+Q1Y14i <- rbind(
+  subset(Q1Y14, industry_code==10 & own_code==5),
+  subset(Q1Y14, industry_code==31212),
+  subset(Q1Y14, industry_code==722 & own_code==5),
+  subset(Q1Y14, industry_code==72233 & own_code==5))
+y14i <- rbind(Q4Y14i,Q3Y14i,Q2Y14i,Q1Y14i)
+
+Q4Y13 <- blsQCEW('Area', year='2013', quarter='4', area='01073')
+Q3Y13 <- blsQCEW('Area', year='2013', quarter='3', area='01073')
+Q2Y13 <- blsQCEW('Area', year='2013', quarter='2', area='01073')
+Q1Y13 <- blsQCEW('Area', year='2013', quarter='1', area='01073')
+
+Q4Y13i <- rbind(
+  subset(Q4Y13, industry_code==10 & own_code==5),
+  subset(Q4Y13, industry_code==31212),
+  subset(Q4Y13, industry_code==722 & own_code==5),
+  subset(Q4Y13, industry_code==72233 & own_code==5))
+Q3Y13i <- rbind(
+  subset(Q3Y13, industry_code==10 & own_code==5),
+  subset(Q3Y13, industry_code==31212),
+  subset(Q3Y13, industry_code==722 & own_code==5),
+  subset(Q3Y13, industry_code==72233 & own_code==5))
+Q2Y13i <- rbind(
+  subset(Q2Y13, industry_code==10 & own_code==5),
+  subset(Q2Y13, industry_code==31212),
+  subset(Q2Y13, industry_code==722 & own_code==5),
+  subset(Q2Y13, industry_code==72233 & own_code==5))
+Q1Y13i <- rbind(
+  subset(Q1Y13, industry_code==10 & own_code==5),
+  subset(Q1Y13, industry_code==31212),
+  subset(Q1Y13, industry_code==722 & own_code==5),
+  subset(Q1Y13, industry_code==72233 & own_code==5))
+y13i <- rbind(Q4Y13i,Q3Y13i,Q2Y13i,Q1Y13i)
+
+Q4Y12 <- blsQCEW('Area', year='2012', quarter='4', area='01073')
+Q3Y12 <- blsQCEW('Area', year='2012', quarter='3', area='01073')
+Q2Y12 <- blsQCEW('Area', year='2012', quarter='2', area='01073')
+Q1Y12 <- blsQCEW('Area', year='2012', quarter='1', area='01073')
+
+Q4Y12i <- rbind(
+  subset(Q4Y12, industry_code==10 & own_code==5),
+  subset(Q4Y12, industry_code==31212),
+  subset(Q4Y12, industry_code==722 & own_code==5),
+  subset(Q4Y12, industry_code==72233 & own_code==5))
+Q3Y12i <- rbind(
+  subset(Q3Y12, industry_code==10 & own_code==5),
+  subset(Q3Y12, industry_code==31212),
+  subset(Q3Y12, industry_code==722 & own_code==5),
+  subset(Q3Y12, industry_code==72233 & own_code==5))
+Q2Y12i <- rbind(
+  subset(Q2Y12, industry_code==10 & own_code==5),
+  subset(Q2Y12, industry_code==31212),
+  subset(Q2Y12, industry_code==722 & own_code==5),
+  subset(Q2Y12, industry_code==72233 & own_code==5))
+Q1Y12i <- rbind(
+  subset(Q1Y12, industry_code==10 & own_code==5),
+  subset(Q1Y12, industry_code==31212),
+  subset(Q1Y12, industry_code==722 & own_code==5),
+  subset(Q1Y12, industry_code==72233 & own_code==5))
+y12i <- rbind(Q4Y12i,Q3Y12i,Q2Y12i,Q1Y12i)
+
+#Data only available until 2012
+
+Jeff_county_qcew <- rbind(y16i, y15i, y14i, y13i, y12i)
+drops <- c("agglvl_code", "size_code", "disclosure_code", "lq_disclosure_code", "oty_disclosure_code")
+Jeff_county_qcew <- Jeff_county_qcew[ , !(names(Jeff_county_qcew) %in% drops)]
+Jeff_county_qcew$yearqtr <- paste(Jeff_county_qcew$year,Jeff_county_qcew$qtr, sep="-")
+View(Jeff_county_qcew)
+
+#Begin data analysis on Jeff_county_qcew
+all <- subset(Jeff_county_qcew, industry_code=="10")
+fooddrink <- subset(Jeff_county_qcew, industry_code=="722")
+brewery <- subset(Jeff_county_qcew, industry_code=="31212")
+
+ggplot(all, aes(x=yearqtr,qtrly_estabs, group=1)) +
+  geom_line() +
+  geom_point() +
+  xlab("Year") +
+  ylab("# of establishments") +
+ggtitle("All Private Establishments in Jefferson County")
+
+ggplot(fooddrink, aes(x=yearqtr,qtrly_estabs, group=1)) +
+  geom_line() +
+  geom_point() +
+  xlab("Year") +
+  ylab("# of establishments") +
+  ggtitle("All Private Restaurants and Bars in Jefferson County")
+
+ggplot(brewery, aes(x=yearqtr, group=1)) +
+  geom_line(aes(y=qtrly_estabs, colour="Establishments")) +
+  geom_line(aes(y=oty_total_qtrly_wages_pct_chg, colour="Brewery wages % chg")) +
+  scale_colour_manual("", 
+                      values = c("Establishments"="black", "Brewery wages % chg"="red")) +
+  xlab("Year") +
+  ylab("# of establishments") +
+  ggtitle("All Private Breweries in Jefferson County")
+
+print(brewery$oty_total_qtrly_wages_pct_chg)
+
+#Look at fast-moving industries
+Y16a <- blsQCEW('Area', year='2016', quarter='a', area='01073')
+#Food trucks are amongst the fastest growing industries
+foodtruck <- subset(Jeff_county_qcew, industry_code=="72233")
+
+ggplot(foodtruck, aes(x=yearqtr, group=1)) +
+  geom_line(aes(y=qtrly_estabs, colour="Food trucks")) +
+  xlab("Year") +
+  ylab("# of establishments") +
+  ggtitle("All Food Trucks in Jefferson County")
+
+foodtruck$brewery_qtrly_estabs <-brewery$qtrly_estabs
+
+ggplot(foodtruck, aes(x=yearqtr, group=1)) +
+  geom_line(aes(y=qtrly_estabs, colour="Food Trucks")) +
+  geom_line(aes(y=brewery_qtrly_estabs, colour="Breweries")) +
+  scale_colour_manual("", 
+                      values = c("Food Trucks"="black", "Breweries"="red")) +
+  xlab("Year") +
+  ylab("# of establishments") +
+  ggtitle("All Private Breweries & Food Trucks in Jefferson County")
+#Possible relationship between breweries and food trucks
+#There is literally an interaction between them since the food trucks park
+#Right outside or even inside the breweries
+cor.test(foodtruck$qtrly_estabs, brewery$qtrly_estabs)
+
+#Could proceed with accounting for seasonality with the stl function in
+#the loess package
