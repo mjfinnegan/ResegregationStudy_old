@@ -420,7 +420,7 @@ Y16a <- blsQCEW('Area', year='2016', quarter='a', area='01073')
 foodtruck <- subset(Jeff_county_qcew, industry_code=="72233")
 
 ggplot(foodtruck, aes(x=yearqtr, group=1)) +
-  geom_line(aes(y=qtrly_estabs, colour="Food trucks")) +
+  geom_line(aes(y=qtrly_estabs)) +
   xlab("Year") +
   ylab("# of establishments") +
   ggtitle("All Food Trucks in Jefferson County")
@@ -440,5 +440,69 @@ ggplot(foodtruck, aes(x=yearqtr, group=1)) +
 #Right outside or even inside the breweries
 cor.test(foodtruck$qtrly_estabs, brewery$qtrly_estabs)
 
+#Look at wages
+ggplot(brewery, aes(x=yearqtr, group=1)) +
+  geom_line(aes(y=total_qtrly_wages)) +
+  xlab("Year") +
+  ylab("Wages") +
+  ggtitle("Brewery Wages in Jefferson County")
+
+ggplot(foodtruck, aes(x=yearqtr, group=1)) +
+  geom_line(aes(y=total_qtrly_wages)) +
+  xlab("Year") +
+  ylab("Wages") +
+  ggtitle("Food Truck Wages in Jefferson County")
+
+ggplot(fooddrink, aes(x=yearqtr, group=1)) +
+  geom_line(aes(y=oty_total_qtrly_wages_pct_chg)) +
+  xlab("Year") +
+  ylab("Percent Change in Wages") +
+  ggtitle("Restaurant & Bars Wages in Jefferson County")
+
+ggplot(fooddrink, aes(x=yearqtr, group=1)) +
+  geom_line(aes(y=total_qtrly_wages)) +
+  xlab("Year") +
+  ylab("Total Wages") +
+  ggtitle("Restaurant & Bars Wages in Jefferson County")
+
+library(pipeR)
+library(readr)
+library(lubridate)
+
+
+plot1 <- fooddrink %>>% ggplot() + 
+  geom_bar(mapping = aes(x = yearqtr, y = oty_qtrly_estabs_pct_chg),
+          stat = "identity") + 
+  #geom_point(mapping = aes(x = yearqtr, y = total_qtrly_wages)) + 
+  geom_line(mapping = aes(x = yearqtr, y = oty_total_qtrly_wages_pct_chg, group=1)) + 
+  scale_y_continuous(name = expression("Percent Change in Quarterly Establishments"),
+                     limits = c(-2, 10))
+plot2 <- plot1 %+% scale_y_continuous(name = 
+                    expression("Percent Change in Quarterly Establishments"), 
+                    sec.axis = sec_axis(~ ., 
+                        name = "Percent Change in Wages"), limits = c(-2, 10))+
+                  labs(title="Restaurants and Bars:",
+                       subtitle="Establishments and Wages")
+plot2
+
+fooddrink$oty_avg_emplvl_pct_chg <- rowMeans(subset(fooddrink, select = 
+                                    c(oty_month1_emplvl_pct_chg,
+                                      oty_month2_emplvl_pct_chg,
+                                      oty_month3_emplvl_pct_chg)))
+
+plo3 <- fooddrink %>>% ggplot() + 
+  geom_bar(mapping = aes(x = yearqtr, y = oty_avg_emplvl_pct_chg), stat="identity") + 
+  geom_point(mapping = aes(x = yearqtr, y = oty_total_qtrly_wages_pct_chg)) + 
+  geom_line(mapping = aes(x = yearqtr, y = oty_total_qtrly_wages_pct_chg, group=1)) + 
+  scale_y_continuous(name = expression("Percent Change in Average Employment"),
+                     limits = c(-2, 10))
+plot4 <- plo3 %+% scale_y_continuous(name = 
+                                       expression("Percent Change in Average Employment"), 
+                                     sec.axis = sec_axis(~ ., 
+                                                         name = "Percent Change Wages"), limits = c(-2, 10))+
+  labs(title="Restaurants and Bars:",
+       subtitle="Employment and Wages")
+plot4
 #Could proceed with accounting for seasonality with the stl function in
 #the loess package
+  
