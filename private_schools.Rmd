@@ -41,7 +41,7 @@ pvt_13 <- read.csv("~/Dropbox/PkgData/SchoolData/private/pss13.csv")
 pvt_15 <- read.csv("~/Dropbox/PkgData/SchoolData/private/pss15.csv")
 ```
 
-##Reduce Size of Data
+## Reduce Size of Data
 ```{r filter data}
 #Only select private schools in Alabama 
 pvt_89 <- filter(pvt_89, pvt_89$STATE=='AL')
@@ -75,7 +75,7 @@ pvt_11$pzip <- substr(pvt_11$pzip, 1, 5)
 pvt_13$PZIP <- substr(pvt_13$PZIP, 1, 5)
 pvt_15$pzip <- substr(pvt_15$pzip, 1, 5)
 
-##consolidate variables
+## consolidate variables
 keep89 <- c("EPIN", "CITY", "STATE", "EZIP", "PSS064",
             "NUMSTUDS", "STTCH_RT", "HIGRADE") 
 pvt_89 <- pvt_89[keep89]
@@ -254,7 +254,7 @@ pvt_13$YR <- '13'
 pvt_15$YR <- '15'
 ```
 
-##Standardize private school variables
+## Standardize private school variables
 ```{r standardize}
 l.pvt <- list(pvt_89, pvt_91, pvt_93, pvt_95, pvt_97, pvt_99, pvt_01, pvt_03, pvt_05, pvt_07, pvt_09, pvt_11, pvt_13, pvt_15)
 
