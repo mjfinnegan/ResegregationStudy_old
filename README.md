@@ -1,4 +1,4 @@
-# BirminghamGentrification
+# Resegregation Study
 This is the beginning of a study on school resegregation in Alabama. In Particular, we focus on measuring public and private enrollment outcomes as a result of desegregation court orders being lifted.
 
 ## A Brief History of School Segregation, Desegregation, and Resegregation in Alabama
@@ -7,4 +7,4 @@ Nearly sixty year after Plessy v. Ferguson, 163 U.S. 537 (1896), Brown v. Board 
 At the same time, in an attempt to circumvent integration, the South saw a rise in private schools catered to wealthy white families, commonly referred to as "segregation academies". However, while these privates remained segregated the publics were becoming integrated as a result of the court orders. This system remained in place for the next thirty years, until school districts began to fully achiece unitary status, at which point the district could have the desegregation court order removed. While the schools must show that they have met and are in compliance with the six Green factors (student assignment, faculty assignment, staff assignment, transportation, extracurricular activities, and facilities), once the court desegregation order is lifted the school district behave with a larger degree of freedom. This study looks at how the public schools behave once the desegregation order has been lifted, how residents react, and how public and private enrollment changes as a result.
 
 ## Data
-The private and public school data used in this study was obtained from the National Center for Education Statistics. The data on school desegregation orders was obtained from ProPublica.
+The private and public school data used in this study was obtained from the National Center for Education Statistics via the Private School Universe Survey (PSS) and Common Core of Data respectively.. The data on school desegregation orders was obtained from ProPublica, Sean Reardon, and the United States Commission on Civil Rights.
