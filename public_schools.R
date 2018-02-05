@@ -286,7 +286,7 @@ l.public <- list(pub89, pub90, pub91, pub92, pub93, pub94, pub95, pub96, pub97, 
 # build standardize function
 funStandardizeFields.pub <- function(dt){
   data.table::setnames(dt, names(dt), stringr::str_to_upper(names(dt)))
-  dt$NCESSCH <- as.character(dt$NCESSCH)
+  dt$NCESSCH <- as.character(as.numeric(dt$NCESSCH))
   dt <- as.data.frame(dt)
   drop <- grep("^I", names(dt), value = TRUE)
   drop <- drop[!drop=="IND"]
@@ -354,9 +354,6 @@ dt.public$P_HISP <- dt.public$HISP/dt.public$MEMBER
 dt.public$P_BLACK <- dt.public$BLACK/dt.public$MEMBER
 dt.public$P_WHITE <- dt.public$WHITE/dt.public$MEMBER
 
-dt.public <- dt.public[, -45]
-dt.public = dt.public[, c(1:9,623,624, 10:622,625:778)]
-dt.public = dt.public[, c(1:5,46,6:45,47:778)]
 
 drop <- grep("^I", names(dt.public), value = TRUE)
 drop <- drop[!drop=="IND"]
@@ -366,31 +363,46 @@ dt.public <- dt.public %>% dplyr:: select(var.out)
 library(plyr)
 library(dplyr)
 library(data.table)
-try <- try[, CITY := unique(CITY[!is.na(CITY)]), by = NCESSCH]
+try <- dt.public[, CITY := unique(CITY[!is.na(CITY)]), by = NCESSCH]
 
-dt.cnty <- na.omit(dplyr::distinct(select(dt.public, NCESSCH, CONAME)))
+dt.cnty <- na.omit(dplyr::distinct(select(dt.public, NCESSCH, COUNTY)))
 for(id in 1:nrow(dt.cnty)){
-  dt.public$CONAME[dt.public$NCESSCH %in% dt.cnty$NCESSCH[id]] <- dt.cnty$CONAME[id]
+  dt.public$COUNTY[dt.public$NCESSCH %in% dt.cnty$NCESSCH[id]] <- dt.cnty$COUNTY[id]
 }
 rm(dt.cnty)
 
-cc <- data.frame(dt.public$CONAME, dt.public$CITY)
+cc <- data.frame(dt.public$COUNTY, dt.public$CITY)
 cc <- na.omit(cc)
 cc <- cc[!duplicated(cc),]
-cc <- cc[grep("COUNTY", cc$dt.public.CONAME), ]
+cc <- cc[grep("COUNTY", cc$dt.public.COUNTY), ]
 cc <- mutate_each(cc, funs(toupper))
 
 
-data.table::setnames(cc, 'dt.public.CONAME', 'CONAME')
-data.table::setnames(cc, 'dt.public.NCESSCH', 'NCESSCH')
+data.table::setnames(cc, 'dt.public.COUNTY', 'COUNTY')
 data.table::setnames(cc, 'dt.public.CITY', 'CITY')
 
-nm <- c("CONAME")
+nm <- c("COUNTY")
 dt.public <- as.data.frame(dt.public)
 dt.public[nm] <- lapply(nm, function(x) cc[[x]][match(dt.public$CITY, cc$CITY)])
 
 
 dt.public <- dt.public[with(dt.public, order(LEANM)),]
+
+### prepare data to be merged with invol deseg order data ###
+
+# first clean district names
+dt.public$LEANM <- gsub(" SCH DIST.*","",dt.public$LEANM)
+dt.public$LEANM <- gsub(" CITY CITY.*"," CITY",dt.public$LEANM)
+dt.public$LEANM <- gsub(" CO.*"," COUNTY",dt.public$LEANM)
+
+# capitalize  names in order data
+invol_deseg <- mutate_each(invol_deseg, funs(toupper))
+
+# merge public and deseg order data
+data.table::setnames(invol_deseg, 'District Name', 'DISTRICT')
+data.table::setnames(dt.public, 'LEANM', 'DISTRICT')
+dt.public <- merge( x = dt.public, y = invol_deseg, by = "DISTRICT", all.x=TRUE)
+
 
 dt.public$YEAR <- as.factor(dt.public$YEAR)
 race.totals.public <- dt.public %>%
