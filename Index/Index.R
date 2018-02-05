@@ -116,9 +116,10 @@ write.csv(pub.index, "~/Documents/Github/Schools/pub.index.csv")
 # Create Index
 ###################################################
 
-
 pub.index <- read.csv("file path")
+pub.index <- pub.index[,-1] # throw out first column holding row number
 pvt.index <- read.csv("file path")
+pvt.index <- pvt.index[,-1]
 df.schools <- rbind(pub.index, pvt.index)
 ###################################################
 # Publics and Privates
