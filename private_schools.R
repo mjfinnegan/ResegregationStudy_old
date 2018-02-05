@@ -1,97 +1,6 @@
-jeff_poverty2014_15 <- read_excel("~/Documents/Github/BirminghamGentrification/Schools/bham_city_schools_lunch2014_15.xlsx")
-
 invol_deseg <- data.table::fread('~/Dropbox/PkgData/SchoolData/desegregation-orders/invol_data.csv')
 vol_deseg <- data.table::fread('~/Dropbox/PkgData/SchoolData/desegregation-orders/vol_data.csv')
 invol_deseg<- invol_deseg[which(invol_deseg$State=='AL')]
-
-l.public <- list()
-
-export(characterize(import("~/Documents/Github/Schools/psu97ai.sas7bdat")), "~/Documents/Github/Schools/pub97.csv")
-l.public$ccd_97_98 <- data.table::fread('~/Documents/Github/Schools/pub97.csv')
-l.public$ccd_97_98 <- l.public$ccd_97_98[ST97=='AL']
-
-
-export(characterize(import("~/Documents/Github/Schools/sc981cai.sas7bdat")), "~/Documents/Github/Schools/pub98.csv")
-l.public$ccd_98_99 <- data.table::fread('~/Documents/Github/Schools/pub98.csv')
-l.public$ccd_98_99 <- l.public$ccd_98_99[MSTATE98=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc991bai.sas7bdat")), "~/Documents/Github/Schools/pub99.csv")
-l.public$ccd_99_00 <- data.table::fread('~/Documents/Github/Schools/pub99.csv')
-l.public$ccd_99_00 <- l.public$ccd_99_00[MSTATE99=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc001aai.sas7bdat")), "~/Documents/Github/Schools/pub00.csv")
-l.public$ccd_00_01 <- data.table::fread('~/Documents/Github/Schools/pub00.csv')
-l.public$ccd_00_01 <- l.public$ccd_00_01[MSTATE00=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc011aai.sas7bdat")), "~/Documents/Github/Schools/pub01.csv")
-l.public$ccd_01_02 <- data.table::fread('~/Documents/Github/Schools/pub01.csv')
-l.public$ccd_01_02 <- l.public$ccd_01_02[MSTATE01=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc021aai.sas7bdat")), "~/Documents/Github/Schools/pub02.csv")
-l.public$ccd_02_03 <- data.table::fread('~/Documents/Github/Schools/pub02.csv')
-l.public$ccd_02_03 <- l.public$ccd_02_03[MSTATE02=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc031aai.sas7bdat")), "~/Documents/Github/Schools/pub03.csv")
-l.public$ccd_03_04 <- data.table::fread('~/Documents/Github/Schools/pub03.csv')
-l.public$ccd_03_04 <- l.public$ccd_03_04[MSTATE03=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc041bai.sas7bdat")), "~/Documents/Github/Schools/pub04.csv")
-l.public$ccd_04_05 <- data.table::fread('~/Documents/Github/Schools/pub04.csv')
-l.public$ccd_04_05 <- l.public$ccd_04_05[MSTATE04=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc051aai.sas7bdat")), "~/Documents/Github/Schools/pub05.csv")
-l.public$ccd_05_06 <- data.table::fread('~/Documents/Github/Schools/pub05.csv')
-l.public$ccd_05_06 <- l.public$ccd_05_06[MSTATE05=='AL']
-
-export(characterize(import("~/Documents/Github/sc061cai.sas7bdat")), "~/Documents/Github/Schools/pub6.csv")
-l.public$ccd_06_07 <- data.table::fread('~/Documents/Github/Schools/pub6.csv')
-l.public$ccd_06_07 <- l.public$ccd_06_07[MSTATE06=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc071b.sas7bdat")), "~/Documents/Github/Schools/pub7.csv")
-l.public$ccd_07_08 <- data.table::fread('~/Documents/Github/Schools/pub7.csv')
-l.public$ccd_07_08 <- l.public$ccd_07_08[MSTATE07=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc081b.sas7bdat")), "~/Documents/Github/Schools/pub8.csv")
-l.public$ccd_08_09 <- data.table::fread('~/Documents/Github/Schools/pub8.csv')
-l.public$ccd_08_09 <- l.public$ccd_08_09[MSTATE08=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc092a.sas7bdat")), "~/Documents/Github/Schools/pub9.csv")
-l.public$ccd_09_10 <- data.table::fread('~/Documents/Github/Schools/pub9.csv')
-l.public$ccd_09_10 <- l.public$ccd_09_10[MSTATE09=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc102a.sas7bdat")), "~/Documents/Github/Schools/pub10.csv")
-l.public$ccd_10_11 <- data.table::fread('~/Documents/Github/Schools/pub10.csv')
-l.public$ccd_10_11 <- l.public$ccd_10_11[MSTATE=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc111a_supp.sas7bdat")), "~/Documents/Github/Schools/pub11.csv")
-l.public$ccd_11_12 <- data.table::fread('~/Documents/Github/Schools/pub11.csv')
-l.public$ccd_11_12 <- l.public$ccd_11_12[MSTATE=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc122a.sas7bdat")), "~/Documents/Github/Schools/pub12.csv")
-l.public$ccd_12_13 <- data.table::fread('~/Documents/Github/Schools/pub12.csv')
-l.public$ccd_12_13 <- l.public$ccd_12_13[MSTATE=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/sc132a.sas7bdat")), "~/Documents/Github/Schools/pub13.csv")
-l.public$ccd_13_14 <- data.table::fread('~/Documents/Github/Schools/pub13.csv')
-l.public$ccd_13_14 <- l.public$ccd_13_14[MSTATE=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/ccd_sch_052_1415_w_0216161a.sas7bdat")), "~/Documents/Github/Schools/pub14.csv")
-l.public$ccd_14_15 <- data.table::fread('~/Documents/Github/Schools/pub14.csv')
-l.public$ccd_14_15 <- l.public$ccd_14_15[STABR=='AL']
-
-export(characterize(import("~/Documents/Github/Schools/ccd_sch_029_1516_sas_prel.sas7bdat")), "~/Documents/Github/Schools/pub15.csv")
-l.public$ccd_15_16 <- data.table::fread('~/Documents/Github/Schools/pub15.csv')
-l.public$ccd_15_16 <- l.public$ccd_15_16[STBR=='AL']
-
-l.public$ccd_16_17 <- data.table::fread('~/Downloads/ccd_sch_029_1617_w_prel_050317.csv')
-l.public$ccd_16_17 <- l.public$ccd_16_17[ST=='AL']
-
-
-
-pub86 <- read.table('~/Documents/Github/Schools/psu86ai.txt', sep="\t",header=FALSE, fill=FALSE)
-export(characterize(import("~/Documents/Github/Schools/psu86ai.txt")), "~/Documents/Github/pub86.csv")
-l.public$ccd_86_87 <- data.table::fread('~/Documents/Github/pub86.csv')
-l.public$ccd_86_87 <- l.public$ccd_86_87[MSTATE86=='AL']
 
 write.csv("~/Dropbox/PkgData/SchoolData/private/pss1112.txt", "~/Desktop/pss1112.csv")
 
@@ -124,20 +33,20 @@ pvt_11 <- read.csv("~/Dropbox/PkgData/SchoolData/private/pss11.csv")
 pvt_13 <- read.csv("~/Dropbox/PkgData/SchoolData/private/pss13.csv")
 pvt_15 <- read.csv("~/Dropbox/PkgData/SchoolData/private/pss15.csv")
 
-pvt_89 <- filter(pvt_89, pvt_89$STATE=='AL')
-pvt_91 <- filter(pvt_91, pvt_91$ESTABB=='AL')
-pvt_93 <- filter(pvt_93, pvt_93$PSTABB=='AL')
-pvt_95 <- filter(pvt_95, pvt_95$QSTABB=='AL')
-pvt_97 <- filter(pvt_97, pvt_97$RSTABB=='AL')
-pvt_99 <- filter(pvt_99, pvt_99$SSTABB=='AL')
-pvt_01 <- filter(pvt_01, pvt_01$PSTABB=='AL')
-pvt_03 <- filter(pvt_03, pvt_03$PSTABB=='AL')
-pvt_05 <- filter(pvt_05, pvt_05$pstabb=='AL')
-pvt_07 <- filter(pvt_07, pvt_07$pstabb=='AL')
-pvt_09 <- filter(pvt_09, pvt_09$pstabb=='AL')
-pvt_11 <- filter(pvt_11, pvt_11$pstabb=='AL')
-pvt_13 <- filter(pvt_13, pvt_13$PSTABB=='AL')
-pvt_15 <- filter(pvt_15, pvt_15$pstabb=='AL')
+pvt_89 <- subset(pvt_89, STATE=='AL')
+pvt_91 <- subset(pvt_91, pvt_91$ESTABB=='AL')
+pvt_93 <- subset(pvt_93, pvt_93$PSTABB=='AL')
+pvt_95 <- subset(pvt_95, pvt_95$QSTABB=='AL')
+pvt_97 <- subset(pvt_97, pvt_97$RSTABB=='AL')
+pvt_99 <- subset(pvt_99, pvt_99$SSTABB=='AL')
+pvt_01 <- subset(pvt_01, pvt_01$PSTABB=='AL')
+pvt_03 <- subset(pvt_03, pvt_03$PSTABB=='AL')
+pvt_05 <- subset(pvt_05, pvt_05$pstabb=='AL')
+pvt_07 <- subset(pvt_07, pvt_07$pstabb=='AL')
+pvt_09 <- subset(pvt_09, pvt_09$pstabb=='AL')
+pvt_11 <- subset(pvt_11, pvt_11$pstabb=='AL')
+pvt_13 <- subset(pvt_13, pvt_13$PSTABB=='AL')
+pvt_15 <- subset(pvt_15, pvt_15$pstabb=='AL')
 
 pvt_03$PZIP <- substr(pvt_03$PZIP, 1, 5)
 pvt_05$pzip <- substr(pvt_05$pzip, 1, 5)
@@ -173,18 +82,25 @@ pvt_91$ADDRS <- NA
 pvt_91$MINOR <- NA
 pvt_91$zip91 <- substr(pvt_91$zip91, 1, 5)
 
-keep93 <- c("PPIN", "PCITY", "PSTABB", "PCNTNM", "PZIP", "P380",
+keep93 <- c("PPIN", "PCITY", "PSTABB", "PCNTNM", "PZIP", "P380", "P210", "P215", "P220", "P225", "P230",
             "NUMSTUDS", "STTCH_RT", "HIGRADE",  "P_INDIAN", "P_ASIAN", "P_HISP", "P_BLACK", "P_WHITE",
             "PMINOR") 
 pvt_93 <- pvt_93[keep93]
 names(pvt_93)[names(pvt_93)=="P380"] <- "religious"
 names(pvt_93)[names(pvt_93)=="PZIP"] <- "zip93"
 names(pvt_93)[names(pvt_93)=="PPIN"] <- "pin"
+pvt_93$WHITE <- pvt_93$NUMSTUDS*pvt_93$P_INDIAN
+pvt_93$ASIAN <- pvt_93$NUMSTUDS*pvt_93$P_ASIAN
+pvt_93$HISP <- pvt_93$NUMSTUDS*pvt_93$P_HISP
+pvt_93$BLACK <- pvt_93$NUMSTUDS*pvt_93$P_BLACK
+pvt_93$WHITE <- pvt_93$NUMSTUDS*pvt_93$P_WHITE
+## 1993 race counts are now considered 'imputed', but in fact the percentages were the created variables
+## the counts simply werent included in the report.
 pvt_93$INST <- NA
 pvt_93$ADDRS <- NA
 pvt_93$zip93 <- substr(pvt_93$zip93, 1, 5)
 
-keep95 <- c("QPIN", "QCITY", "QSTABB", "QCNTNM", "QZIP", "P430",
+keep95 <- c("QPIN", "QCITY", "QSTABB", "QCNTNM", "QZIP","P345", "P350", "P355", "P360", "P365", "P430",
             "NUMSTUDS", "STTCH_RT",  "P_INDIAN", "P_ASIAN", "P_HISP",
             "P_BLACK", "P_WHITE", "PERMINOR", "QHIGR6") 
 pvt_95 <- pvt_95[keep95]
@@ -196,7 +112,7 @@ pvt_95$INST <- NA
 pvt_95$ADDRS <- NA
 pvt_95$zip95 <- substr(pvt_95$zip95, 1, 5)
 
-keep97 <- c("RPIN", "RCITY", "RSTABB", "RCNTNM", "RZIP", "P340", "P430",
+keep97 <- c("RPIN", "RCITY", "RSTABB", "RCNTNM", "RZIP","P310", "P315", "P320", "P325", "P330", "P340", "P430",
             "NUMSTUDS", "STTCH_RT",  "P_INDIAN", "P_ASIAN", "P_HISP",
             "P_BLACK", "P_WHITE", "PMINOR", "HIGR8") 
 pvt_97 <- pvt_97[keep97]
@@ -209,7 +125,7 @@ pvt_97$INST <- NA
 pvt_97$ADDRS <- NA
 pvt_97$zip97 <- substr(pvt_97$zip97, 1, 5)
 
-keep99 <- c("SPIN", "SCITY", "SSTABB", "SCNTYNM", "SZIP", "P340", "P360", 
+keep99 <- c("SPIN", "SCITY", "SSTABB", "SCNTYNM", "SZIP","P310", "P315", "P320", "P325", "P330", "P340", "P360", 
             "P361", "P430", "NUMSTUDS", "STTCH_RT",  "P_INDIAN", "P_ASIAN", 
             "P_HISP", "P_BLACK", "P_WHITE", "PMINOR", "HIGR2000") 
 pvt_99 <- pvt_99[keep99]
@@ -223,7 +139,7 @@ pvt_99$INST <- NA
 pvt_99$ADDRS <- NA
 pvt_99$zip99 <- substr(pvt_99$zip99, 1, 5)
 
-keep01 <- c("PPIN", "PCITY", "PSTABB", "PCNTNM", "PZIP", "P340", "P360", 
+keep01 <- c("PPIN", "PCITY", "PSTABB", "PCNTNM", "PZIP","P310", "P315", "P320", "P325", "P330", "P340", "P360", 
             "P361", "P430", "NUMSTUDS", "STTCH_RT",  "P_INDIAN", "P_ASIAN", 
             "P_HISP", "P_BLACK", "P_WHITE", "PMINOR", "HIGR2002") 
 pvt_01 <- pvt_01[keep01]
@@ -238,7 +154,7 @@ pvt_01$ADDRS <- NA
 pvt_01$zip01 <- substr(pvt_01$zip01, 1, 5)
 
 keep03 <- c("PPIN", "PCITY", "PSTABB", "PCNTNM",
-            "PZIP", "P360", "P361", "P430", "MALES", "NUMSTUDS",
+            "PZIP", "P310", "P315", "P320", "P325", "P330", "P360", "P361", "P430", "MALES", "NUMSTUDS",
             "P_INDIAN", "P_ASIAN", "P_HISP", "P_BLACK", "P_WHITE",
             "PMINOR", "STTCH_RT", "HIGR2004") 
 pvt_03 <- pvt_03[keep03]
@@ -252,7 +168,7 @@ pvt_03$ADDRS <- NA
 pvt_03$zip03 <- substr(pvt_03$zip03, 1, 5)
 
 keep05 <- c("ppin", "pinst", "pcity", "pstabb", "pcntnm",
-            "pzip","latitude", "longitude", "P360", "P361", "P430",
+            "pzip","latitude", "longitude","P310", "P315", "P320", "P325", "P330", "P360", "P361", "P430",
             "males", "numstuds", "p_indian", "p_asian", "p_hisp", 
             "p_black", "p_white", "pminor", "sttch_rt", "higr2006")
 pvt_05 <- pvt_05[keep05]
@@ -265,18 +181,18 @@ pvt_05$ADDRS <- NA
 pvt_05$zip05 <- substr(pvt_05$zip05, 1, 5)
 
 keep07 <- c("ppin", "pinst", "pcity", "pstabb", "pcntnm",
-            "pzip", "paddrs","latitude", "longitude", "P360", "P430",
+            "pzip", "paddrs","latitude", "longitude", "P310", "P315", "P320", "P325", "P330", "P360", "P430",
             "males", "numstuds", "p_indian", "p_asian", "p_hisp", 
             "p_black", "p_white", "pminor", "sttch_rt", "higr2008")
 pvt_07 <- pvt_07[keep07]
 names(pvt_07)[names(pvt_07)=="P360"] <- "pct_4year"
 names(pvt_07)[names(pvt_07)=="P430"] <- "religious"
 names(pvt_07)[names(pvt_07)=="pzip"] <- "zip07"
-names(pvt_07)[names(pvt_07)=="ppin"] <- "pin"
+names(pvt_07)[names(pvt_07)=="PPIN"] <- "pin"
 pvt_07$zip07 <- substr(pvt_07$zip07, 1, 5)
 
 keep09 <- c("ppin", "pinst", "pcity", "pstabb", "pcntnm",
-            "pzip", "paddrs", "latitude10", "longitude10", "P360", "P430",
+            "pzip", "paddrs", "latitude10", "longitude10","P320", "P330", "P325", "P316", "P318", "P310", "P360", "P430",
             "males", "numstuds", "p_indian", "p_asian", "p_hisp", 
             "p_pacific","p_black", "p_white", "p_two", "sttch_rt", 
             "higr2010")
@@ -288,8 +204,9 @@ names(pvt_09)[names(pvt_09)=="ppin"] <- "pin"
 names(pvt_09)[names(pvt_09)=="p_two"] <- "P_TR"
 pvt_09$zip09 <- substr(pvt_09$zip09, 1, 5)
 
+
 keep11 <- c("ppin", "pinst", "pcity", "pstabb", "pcntnm",
-            "pzip", "paddrs", "latitude12", "longitude12", "p360", "p430",
+            "pzip", "paddrs", "latitude12", "longitude12","p320", "p330", "p325", "p316", "p318", "p310", "p360", "p430",
             "males", "numstuds", "p_indian", "p_asian", "p_hisp", 
             "p_pacific","p_black", "p_white", "p_tr", "sttch_rt", 
             "higr2012")
@@ -301,7 +218,7 @@ names(pvt_11)[names(pvt_11)=="ppin"] <- "pin"
 pvt_11$zip11 <- substr(pvt_11$zip11, 1, 5)
 
 keep13 <- c("PPIN", "PINST", "PCITY", "PSTABB", "PCNTNM",
-            "PZIP", "PADDRS", "LATITUDE14", "LONGITUDE14", "P360", "P430",
+            "PZIP", "PADDRS", "LATITUDE14", "LONGITUDE14", "P320", "P330", "P325", "P316", "P318", "P310", "P360", "P430",
             "MALES", "NUMSTUDS", "P_INDIAN", "P_ASIAN", "P_PACIFIC",
             "P_HISP","P_BLACK", "P_WHITE", "P_TR", "STTCH_RT", 
             "HIGR2014")
@@ -313,7 +230,7 @@ names(pvt_13)[names(pvt_13)=="PPIN"] <- "pin"
 pvt_13$zip13 <- substr(pvt_13$zip13, 1, 5)
 
 keep15 <- c("ppin", "pinst", "pcity", "pstabb", "pcntnm",
-            "pzip", "paddrs", "latitude16", "longitude16", "p360", "p430",
+            "pzip", "paddrs", "latitude16", "longitude16", "p320", "p330", "p325", "p316", "p318", "p310", "p360", "p430",
             "males", "numstuds", "p_indian", "p_asian", "p_hisp", 
             "p_pacific","p_black", "p_white", "p_tr", "sttch_rt", 
             "higr2016")
@@ -325,23 +242,22 @@ names(pvt_15)[names(pvt_15)=="ppin"] <- "pin"
 pvt_15$zip15 <- substr(pvt_15$zip15, 1, 5)
 
 
-pvt_89$YR <- '89'
-pvt_91$YR <- '91'
-pvt_93$YR <- '93'
-pvt_95$YR <- '95'
-pvt_97$YR <- '97'
-pvt_99$YR <- '99'
-pvt_01$YR <- '01'
-pvt_03$YR <- '03'
-pvt_05$YR <- '05'
-pvt_07$YR <- '07'
-pvt_09$YR <- '09'
-pvt_11$YR <- '11'
-pvt_13$YR <- '13'
-pvt_15$YR <- '15'
+pvt_89$YR <- '1989'
+pvt_91$YR <- '1991'
+pvt_93$YR <- '1993'
+pvt_95$YR <- '1995'
+pvt_97$YR <- '1997'
+pvt_99$YR <- '1999'
+pvt_01$YR <- '2001'
+pvt_03$YR <- '2003'
+pvt_05$YR <- '2005'
+pvt_07$YR <- '2007'
+pvt_09$YR <- '2009'
+pvt_11$YR <- '2011'
+pvt_13$YR <- '2013'
+pvt_15$YR <- '2015'
 
 l.pvt <- list(pvt_89, pvt_91, pvt_93, pvt_95, pvt_97, pvt_99, pvt_01, pvt_03, pvt_05, pvt_07, pvt_09, pvt_11, pvt_13, pvt_15)
-
 
 funStandardizeFields <- function(dt){
   data.table::setnames(dt, names(dt), stringr::str_to_upper(names(dt)))
@@ -363,6 +279,27 @@ funStandardizeFields <- function(dt){
   if (length(grep('MINOR', names(dt)))>0){
     data.table::setnames(dt, names(dt)[grep('MINOR', names(dt))], 'P_MINOR')
   }
+  if (length(grep('P310', names(dt)))>0){
+    data.table::setnames(dt, names(dt)[grep('P310', names(dt))], 'NATIVE')
+  }
+  if (length(grep('P315', names(dt)))>0){
+    data.table::setnames(dt, names(dt)[grep('P315', names(dt))], 'ASIAN')
+  }
+  if (length(grep('P316', names(dt)))>0){
+    data.table::setnames(dt, names(dt)[grep('P316', names(dt))], 'ASIAN')
+  }
+  if (length(grep('P320', names(dt)))>0){
+    data.table::setnames(dt, names(dt)[grep('P320', names(dt))], 'HISP')
+  }
+  if (length(grep('P325', names(dt)))>0){
+    data.table::setnames(dt, names(dt)[grep('P325', names(dt))], 'BLACK')
+  }
+  if (length(grep('P325', names(dt)))>0){
+    data.table::setnames(dt, names(dt)[grep('P325', names(dt))], 'BLACK')
+  }
+  if (length(grep('P330', names(dt)))>0){
+    data.table::setnames(dt, names(dt)[grep('P330', names(dt))], 'WHITE')
+  }
   if (length(grep('LATITUDE', names(dt)))>0){
     data.table::setnames(dt, names(dt)[grep('LATITUDE', names(dt))], 'LATITUDE')
     data.table::setnames(dt, names(dt)[grep('LONGITUDE', names(dt))], 'LONGITUDE')
@@ -382,9 +319,48 @@ centroids <- data.table::fread("~/Box Sync/zip_centroids_2010census.csv")
 centroids$intptlat <- as.numeric(stringr::str_replace(centroids$intptlat, '\\+', ''))
 centroids$intptlon <- as.numeric(centroids$intptlon)
 
+
 funAssignGeo <- function(x.pin, dt.pvt, zip.locs, centroids){
+  cat(x.pin, '\n')
   dt.pin <- dt.pvt[PIN==x.pin]
+
+  if (x.pin=='00002369'){
+    dt.pin$ZIP <- '36426'  #originally zip=36427, but no centroid match so recoded to 36426
+  }
+  if (x.pin=='01926175'){
+    dt.pin$ZIP <- '36301'
+  }
+  if (x.pin=='02001283'){
+    dt.pin$ZIP <- '36744'
+  } 
+  if (x.pin=='00001886'){
+    dt.pin$ZIP <- '36925'
+  }
+  if (x.pin=='01925987'){
+    dt.pin$ZIP <- '35601'
+  }
+  if (x.pin=='A9100120'){
+    dt.pin$ZIP <- '36693'
+  }
+  if (x.pin=='A9100161'){
+    dt.pin$ZIP <- '36804'
+  }
+  if (x.pin=='A9300004'){
+    dt.pin$ZIP <- '36330'
+  }
+  if (x.pin=='A9300006'){
+    dt.pin$ZIP <- '36532'
+  }
+  if (x.pin=='A9300016'){
+    dt.pin$ZIP <- '36117'
+  } 
+  if (x.pin=='A9302013'){
+    dt.pin$ZIP <- '35233'
+  } 
   
+  if (unique(dt.pin$ZIP %in% centroids$zcta5)==FALSE){
+    dt.pin$ZIP <- unique(centroids$zcta5[findInterval(dt.pin$ZIP,centroids$zcta5)])
+  }
   # Check to see if missed survey for a given year
   #n.years <- length(unique(dt.pvt$YR))
   #n.pin.years <- nrow(dt.pin)
@@ -393,20 +369,27 @@ funAssignGeo <- function(x.pin, dt.pvt, zip.locs, centroids){
   # If unique zipcodes then try to assign lat long
   zips <- unique(dt.pin$ZIP)
   zips <- zips[!is.na(zips)]
+  
+
+  
   if (!(is.na(zips)) && length(zips==1)){
     lat.val <- unique(round(dt.pin$LATITUDE,digits = 3))
     long.val <- unique(round(dt.pin$LONGITUDE,digits = 3))
+    recent.year <- max(dt.pin[!(is.na(LATITUDE))]$YR)
+    lat.val.recent <- dt.pin[YR==recent.year]$LATITUDE
+    long.val.recent <- dt.pin[YR==recent.year]$LONGITUDE
+    address.recent <- dt.pin[YR==recent.year]$ADDRESS
     if (length(lat.val[!is.na(lat.val)])==1 && length(zips==1)){
       dt.pin$data.notes <- 'One lat and long pair'
-      lat.val.15 <- dt.pin$LATITUDE[dt.pin$YR==15]
-      long.val.15 <- dt.pin$LONGITUDE[dt.pin$YR==15]
-      dt.pin$LATITUDE <- lat.val.15
-      dt.pin$LONGITUDE <- long.val.15
+      dt.pin$LATITUDE <- lat.val.recent
+      dt.pin$LONGITUDE <- long.val.recent
+      dt.pin$ADDRESS <- address.recent
     }
     if (length(lat.val[!is.na(lat.val)])>1 && length(zips==1)){ # approximately one lat long pair... use 2015 lat long pair
       dt.pin$data.notes <- 'Multiple Lat and Long'
-      dt.pin$LATITUDE <- lat.val.15
-      dt.pin$LONGITUDE <- long.val.15
+      dt.pin$LATITUDE <- lat.val.recent
+      dt.pin$LONGITUDE <- long.val.recent
+      dt.pin$ADDRESS <- address.recent
       #use 2015 lat/long
     } 
     if (length(zips)>=2){ # multiple zips
@@ -426,8 +409,10 @@ funAssignGeo <- function(x.pin, dt.pvt, zip.locs, centroids){
 
 PINS <- unique(dt.pvt$PIN)
 
+
 l.clean <- lapply(PINS, function(x.pin) funAssignGeo(x.pin, dt.pvt, zip.locs, centroids))
 dt.clean <- data.table::rbindlist(l.clean,use.names = TRUE, fill=TRUE)
+data.table::setnames(dt.clean, 'P_INDIAN', 'P_NATIVE')
 
 library(dplyr)
 dt.names <- na.omit(distinct(select(dt.clean, PIN, SCHOOL)))
@@ -442,22 +427,16 @@ for(id in 1:nrow(dt.cnty)){
 rm(dt.cnty)
 rm(dt.names)
 
-one.pair <- dt.clean[dt.clean$data.notes=='One lat and long pair']
-one.pair <- na.omit(distinct(select(one.pair, PIN, LATITUDE, LONGITUDE, ADDRESS)))
-  lat.val <- unique(round(dt.pin$LATITUDE,digits = 3))
-  long.val <- unique(round(dt.pin$LONGITUDE,digits = 3))
-one.pair <- na.omit(distinct(select(one.pair, PIN, ADDRESS)))
-for(id in 1:nrow(one.pair)){
-  dt.clean$ADDRESS[dt.clean$PIN %in% one.pair$PIN[id]] <- one.pair$ADDRESS[id]
-}
+write.csv(dt.clean, '~/Desktop/privates.csv')
+
+
 
 #graph pct going to 4 year, religious, race
 
 library(ggplot2)
 count.schools <- data.frame(table(dt.clean$YR))
-count.schools$year <- c(2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 1989, 1991, 1993, 1995, 1997, 1999)
-
-ggplot(count.schools, aes(x=year, Freq)) +
+count.schools$YR <- c(1989, 1991, 1993, 1995, 1997, 1999, 2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015)
+ggplot(count.schools, aes(x=YR, Freq)) +
   geom_line() +
   geom_point() +
   xlab("Year") +
@@ -469,9 +448,8 @@ summary.stats <- dt.clean %>% split(.$YR) %>% map(summary)
 
 library(psych)
 summary.stats.pwhite <- na.omit(describe.by(dt.clean$P_WHITE, group=dt.clean$YR, mat=TRUE))
-summary.stats.pwhite$year <- c(2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 1993, 1995, 1997, 1999)
-
-ggplot(summary.stats.pwhite, aes(x=year, mean)) +
+summary.stats.pwhite$YR <- c(1993, 1995, 1997, 1999, 2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015)
+ggplot(summary.stats.pwhite, aes(x=YR, mean)) +
   geom_line() +
   geom_point() +
   xlab("Year") +
@@ -479,25 +457,23 @@ ggplot(summary.stats.pwhite, aes(x=year, mean)) +
   ggtitle("Percent White in Alabama Privates from 1989 to 2015")
 
 summary.stats.pblack <- na.omit(describe.by(dt.clean$P_BLACK, group=dt.clean$YR, mat=TRUE))
-summary.stats.pblack$year <- c(2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 1993, 1995, 1997, 1999)
 
 summary.stats.phisp <- na.omit(describe.by(dt.clean$P_HISP, group=dt.clean$YR, mat=TRUE))
-summary.stats.phisp$year <- c(2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 1993, 1995, 1997, 1999)
 
 summary.stats.pasian <- na.omit(describe.by(dt.clean$P_ASIAN, group=dt.clean$YR, mat=TRUE))
-summary.stats.pasian$year <- c(2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 1993, 1995, 1997, 1999)
 
 races.means <- bind_cols(summary.stats.pwhite, summary.stats.pblack, summary.stats.phisp, summary.stats.pasian)
-races.means <- races.means[,c("year","mean","mean1","mean2", "mean3")]
+races.means$YR <- c(1993, 1995, 1997, 1999, 2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015)
+races.means <- races.means[,c("YR","mean","mean1","mean2", "mean3")]
 names(races.means)[names(races.means)=="mean"] <- "p_white"
 names(races.means)[names(races.means)=="mean1"] <- "p_black"
 names(races.means)[names(races.means)=="mean2"] <- "p_hispanic"
 names(races.means)[names(races.means)=="mean3"] <- "p_asian"
-races.means<- races.means[with(races.means, order(year)),]
+races.means <- races.means[with(races.means, order(YR)),]
 races.means$total <- races.means$p_white+races.means$p_black+races.means$p_hispanic+races.means$p_asian
 
 
-p <- ggplot(races.means, aes(x=year, group=1)) +
+ggplot(races.means, aes(x=YR, group=1)) +
   geom_line(aes(y=p_white, colour="White")) +
   geom_line(aes(y=p_black, colour="Black")) +
   geom_line(aes(y=p_hispanic, colour="Hispanic")) +
@@ -508,16 +484,37 @@ p <- ggplot(races.means, aes(x=year, group=1)) +
   xlab("Year") +
   ylab("Percent") +
   ggtitle("Ethnicities of Students who are in Private Schools")
-p
+
 
 summary.stats.parochial <- na.omit(describe.by(dt.clean$RELIGIOUS, group=dt.clean$YR, mat=TRUE))
-summary.stats.parochial$year <- c(2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 1989,1991,1993, 1995, 1997, 1999)
+summary.stats.parochial$YR <- c(1989, 1991, 1993, 1995, 1997, 1999, 2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015)
 
-ggplot(summary.stats.parochial, aes(x=year, mean)) +
+ggplot(summary.stats.parochial, aes(x=YR, mean)) +
   geom_line() +
   geom_point() +
   xlab("Year") +
   ylab("Mean Percent of Parochial Schools") +
   ggtitle("Percent of Alabama Privates that are Parochial from 1989 to 2015")
 #1993 is clearly a sketchy year
+
+dt.clean$YR <- as.factor(dt.clean$YR)
+temp <- dt.clean %>%
+  group_by(YR) %>%
+  summarise(n.students = sum(NUMSTUDS))
+
+ggplot(temp, aes(x=YR, n.students, group=1)) +
+  geom_line() +
+  geom_point() +
+  xlab("Year") +
+  ylab("Number of students")
+
+### The percent race variables were originally created by the NCES by computing the inverse of the
+### formula below, so this is not any sort of imputation.
+dt.clean$WHITE <- round((dt.clean$P_WHITE/100)*dt.clean$NUMSTUDS, 0)
+dt.clean$BLACK <- round((dt.clean$P_BLACK/100)*dt.clean$NUMSTUDS, 0)
+dt.clean$HISP <- round((dt.clean$P_HISP/100)*dt.clean$NUMSTUDS, 0)
+dt.clean$ASIAN <- round((dt.clean$P_ASIAN/100)*dt.clean$NUMSTUDS, 0)
+dt.clean$NATIVE <- round((dt.clean$P_NATIVE/100)*dt.clean$NUMSTUDS, 0)
+
+
 
