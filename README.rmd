@@ -57,6 +57,9 @@ First, lets increase the white population in school 1 holding all other levels c
 ---
 # diff((1/2)*(((b/(b+c))-(w/(w+x)))^2 + ((c/(b+c))-(x/(w+x)))^2), w)
 ---
+
+Next, take a total derivative with respect to ($w_1$ and $w_2$). Show that for $dw_1=dw_2$, the dissimilarity index does not change.
+
 #### Interpretation and Numerical Example
 ```{r eval=TRUE, echo=FALSE}
 b1 <- 10
@@ -113,3 +116,5 @@ E = \frac{1}{b_{1}+b_{2}}\left(b_{1}\frac{w_{1}}{w_{1}+b_{1}} + b_{2}\frac{w_{2}
 #### Interpretation and Numerical Example
 
 In this case, the exposure is strictly increasing as the number of white students is increased.Consider again the issue in the previous example, where $b_{1} =$ `r b1`, $w_{1} =$ `r w1`, $b_{2} =$ `r b2`, and $w_{2} =$ `r w2` and the white share in school 1 is `r round(50/150, 2)` and the white share in school 2 is `r round(20/30, 2)`. Then, the exposure index is `r fun_exposure(b1,b2,w1,w2)` and adding one more white student to school 1 results in an exposure index of  `r fun_exposure(b1,b2,(w1+1),w2)`. Adding another white student to school 2, which is a majority black school gives an exposure index of `r fun_exposure(b1,b2,(w1),(w2+1))`
+
+### Information Index
