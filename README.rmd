@@ -1,0 +1,115 @@
+---
+title: "Segregation Indices"
+date: "2/4/2018"
+output: pdf_document
+---
+# Resegregation Study
+This is the beginning of a study on school resegregation in Alabama. In Particular, we focus on measuring public and private enrollment outcomes as a result of desegregation court orders being lifted.
+
+## A Brief History of School Segregation, Desegregation, and Resegregation in Alabama
+Nearly sixty year after Plessy v. Ferguson, 163 U.S. 537 (1896), Brown v. Board of Education of Topeka, 347 U.S.483 (1954), overturned the doctrine of "seperate, but equal", and consequently pushed the United States toward integration of its public facilities. However, it was not for over a decade later that schools in the South found themselves being forced to integrate their public schools. Students of color that still attended segregated schools began suing school districts (with the backing of groups such as the NAACP) in an effort to force integration. Eventually, these cases (e.g. Stout v. Jefferson County Board of Education (1965) and Lee v. Macon County Board of Education (1967)) led to desegregation court orders, thus mandating that the school district in question begin integrating its public schools. Commonly achieved by merging schools and busing students in from a wider range of neighbordhoods, school districts were bound by the court to achieve "unitary status" (i.e. a single, rather than segregated school system). 
+
+At the same time, in an attempt to circumvent integration the South saw a rise in private schools catered to wealthy white families, commonly referred to as "segregation academies". However, while these privates remained segregated the publics were becoming integrated as a result of the court orders. This system remained in place for the next thirty years, until school districts began to fully achieve unitary status, at which point the district could have the desegregation court order removed. While the schools must show that they have met and are in compliance with the six Green factors (student assignment, faculty assignment, staff assignment, transportation, extracurricular activities, and facilities), once the court desegregation order is lifted the school districts behave with a larger degree of freedom. This study looks at how the public schools behave once the desegregation order has been lifted, how residents react, and how public and private enrollment changes as a result. The main area of focus is how to properly measure segregation while taking into account yearly variations in private enrollment and school boundaries, which otherwise convolute segregation measures.
+
+## Data
+The private and public school data used in this study was obtained from the National Center for Education Statistics via the Private School Universe Survey (PSS) and Common Core of Data respectively.. The data on school desegregation orders was obtained from ProPublica, Sean Reardon, and the United States Commission on Civil Rights.
+
+## Segregation Indices
+
+### Dissimilarity Index
+
+Here is a the traditional dissimilarity index. 
+
+\begin{equation}\label{dissim:base} D_t=\frac{1}{2}\sum_{i=1}^{n}\left|\frac{b_{it}}{B_{t}}-\frac{w_{it}}{W_{t}}\right|\end{equation}
+
+Interpretable as the percent of black students who would need to be reassigned to a different school for perfect integration to be achieved given the district’s overall racial composition. Ranges from 0 to 1, with 0 denoting perfect integration and 1 denoting
+complete segregation
+
+To see how this works in a comparative static framework (what happens to the index when we increase the number of white or black students in a school), we can turn the absolute value into a squared term without loss of generality. This gives us in Equation \ref{dissim:squared}:
+
+\begin{equation}\label{dissim:squared} D=\frac{1}{2}\sum_{i=1}^{n}\left(\frac{b_{i}}{B}-\frac{w_{i}}{W}\right)^{2}\end{equation}
+
+Next, assume that we have just two schools (i={1,2}).
+
+Then, Equation \ref{dissim:squared} becomes:
+
+\begin{equation}\label{dissim:twoSchools}
+DT = \frac{1}{2} \left(\left(\frac{b_1}{b_1+b_2} - \frac{w_1}{w_1 + w_2} \right)^2 + \left(\frac{b_2}{b_1+b_2} - \frac{w_2}{w_1 + w_2} \right)^2 \right)
+\end{equation}
+
+#### Comparative Statics
+
+First, lets increase the white population in school 1 holding all other levels constant. This yields:
+
+\begin{equation}\label{dissim:diffwhite}
+\frac{\partial D}{\partial{w_{1}}}= \frac{2w_{2}(b_{2}w_{1}-b_{1}w_{2})}{(b_{1}+b_{2})(w_{1}+w_{2})^{3}} dw_1
+\end{equation}
+
+\begin{align*}
+\frac{\partial D}{\partial{w_{1}}} &=
+  \begin{cases}
+   > 0        & \text{if } \frac{b_1}{w_1}<\frac{b_2}{w_2} \\
+   = 0        & \text{if } \frac{b_1}{w_1}=\frac{b_2}{w_2} \\
+   < 0        & \text{if } \frac{b_1}{w_1}>\frac{b_2}{w_2}
+  \end{cases}
+\end{align*}
+
+---
+# diff((1/2)*(((b/(b+c))-(w/(w+x)))^2 + ((c/(b+c))-(x/(w+x)))^2), w)
+---
+#### Interpretation and Numerical Example
+```{r eval=TRUE, echo=FALSE}
+b1 <- 10
+w1 <- 20
+b2 <- 100
+w2 <- 50
+fun_dissim <- function(b1, b2, w1, w2){
+  B <- b1 + b2
+  W <- w1 + w2
+  x = 0.5*((b1/B - w1/W)^2 + (b2/B - w2/W)^2)
+  return(x)
+}
+fun_exposure <- function(b1, b2, w1, w2){
+  t1 <- b1 + w1
+  t2 <- b2 + w2
+  B <- b1 + b2
+  x <- (1/B)*((b1 * w1/t1) + b2 * w2/t2)
+  return(x)
+}
+dissim_1 <- fun_dissim(b1, b2, w1, w2)
+dissim_2 <- fun_dissim(b1, b2, (w1+1), w2)
+dissim_chg <- dissim_2-dissim_1
+dissim_chg_deriv <- (2*w2*(b2*w1-b1*w2))/((b1+b2)*(w1+w2)^3)
+```
+
+Let  $b_{1} =$ `r b1`, $w_{1} =$ `r w1`, $b_{2} =$ `r b2`, and $w_{2} =$ `r w2`. Then the black share in school 1 is `r round(b1/(b1+w1), 2)` and the black share in school 2 is `r round(b2/(b2+w2), 2)`. When we add a white student to school 1 it would apriori seem to increase dissimilarity (increase segregation) since the majority white school just added another white student. The dissimmilarity does in fact increase from `r dissim_1` to `r dissim_2`. 
+
+### Exposure Index
+
+The exposure index takes the form:
+
+\begin{equation}\label{exposure:base} E =\frac{1}{B}\sum_{i=1}^{n}b_{i}*\frac{w_{i}}{t_{i}} \end{equation}
+
+Interpretable as the percent of white students in the average black student’s school. For a given county/district, it ranges from 0 to the percent of white students in the county/district as a whole.
+
+Again, lets assume just two schools:
+
+\begin{equation}\label{exposure:two} 
+E = \frac{1}{b_{1}+b_{2}}\left(b_{1}\frac{w_{1}}{w_{1}+b_{1}} + b_{2}\frac{w_{2}}{w_{2}+b_{2}} \right)
+\end{equation}
+
+\begin{equation}\label{exposure:deriv}
+\frac{\partial E}{\partial w_1} = \frac{b_{1}^2}{(b_{1}+b_{2})(b_{1}+w_{1})^2}dw_{1}
+\end{equation}
+
+\begin{align*}
+\frac{\partial E}{\partial{w_{1}}} &=
+  \begin{cases}
+   = 0        & \text{if } b_{1} = 0 \\
+   > 0        & \text{if } b_{1} > 0 
+  \end{cases}
+\end{align*}
+
+#### Interpretation and Numerical Example
+
+In this case, the exposure is strictly increasing as the number of white students is increased.Consider again the issue in the previous example, where $b_{1} =$ `r b1`, $w_{1} =$ `r w1`, $b_{2} =$ `r b2`, and $w_{2} =$ `r w2` and the white share in school 1 is `r round(50/150, 2)` and the white share in school 2 is `r round(20/30, 2)`. Then, the exposure index is `r fun_exposure(b1,b2,w1,w2)` and adding one more white student to school 1 results in an exposure index of  `r fun_exposure(b1,b2,(w1+1),w2)`. Adding another white student to school 2, which is a majority black school gives an exposure index of `r fun_exposure(b1,b2,(w1),(w2+1))`
