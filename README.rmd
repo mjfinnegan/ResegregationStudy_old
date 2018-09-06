@@ -3,6 +3,27 @@ title: "Segregation Indices"
 date: "2/4/2018"
 output: pdf_document
 ---
+
+# TODO
+
+Data on box (Segregation)
+
+ejData_never_delete_me.rds (In addition to all the school information. Base year district and dismissal already in there. Last thing: Got all the income controls (SAIPE folder). Just need to merge by district ID.
+)
+
+splitting: mf_base_year_matching.R [leadID(1989)] (lat/long in base year. Do some correction on school was/was not in a different district) (district id changes then split but counts a bunch of charter and magnet schools. Need to drop these. Expect to see lots of splitting in SE. Of the districts in Montans 90% have split (charter schools, magnet schools, etc. Need clear definition of Split (cannot just look at district ID). Charter schools will get their own districtID (will have observatin for charter/magnet school. Magnet in Tuscaloosa City school boundary will not have school disrtict id. In my code not sure if the variable for charter/magnet is included. In the raw data there are those indicators. For observation that is magnet or charter: Appears as split school because district id does not match)
+
+map_of_splitting.R (did correction and did every year after 1989. Needed to include 1989)
+
+TODO:
+
+1) Figure out splitting
+
+2) Merge in NCLB stuff - NCLB forcing integration which causes splits.
+
+3) Finnegan (writing) (slides.pdf/Desegregation.pdf)
+
+
 # Resegregation Study
 This is the beginning of a study on school resegregation in Alabama. In Particular, we focus on measuring public and private enrollment outcomes as a result of desegregation court orders being lifted.
 
@@ -12,6 +33,12 @@ Nearly sixty year after Plessy v. Ferguson, 163 U.S. 537 (1896), Brown v. Board 
 At the same time, in an attempt to circumvent integration the South saw a rise in private schools catered to wealthy white families, commonly referred to as "segregation academies". However, while these privates remained segregated the publics were becoming integrated as a result of the court orders. This system remained in place for the next thirty years, until school districts began to fully achieve unitary status, at which point the district could have the desegregation court order removed. While the schools must show that they have met and are in compliance with the six Green factors (student assignment, faculty assignment, staff assignment, transportation, extracurricular activities, and facilities), once the court desegregation order is lifted the school districts behave with a larger degree of freedom. This study looks at how the public schools behave once the desegregation order has been lifted, how residents react, and how public and private enrollment changes as a result. The main area of focus is how to properly measure segregation while taking into account yearly variations in private enrollment and school boundaries, which otherwise convolute segregation measures.
 
 ## Data
+
+
+
+
+
+
 The private and public school data used in this study was obtained from the National Center for Education Statistics via the Private School Universe Survey (PSS) and Common Core of Data respectively.. The data on school desegregation orders was obtained from ProPublica, Sean Reardon, and the United States Commission on Civil Rights.
 
 ## Segregation Indices
