@@ -8,3 +8,4 @@ At the same time, in an attempt to circumvent integration the South saw a rise i
 
 ## Data
 The private and public school data used in this study was obtained from the National Center for Education Statistics via the Private School Universe Survey (PSS) and Common Core of Data respectively.. The data on school desegregation orders was obtained from ProPublica, Sean Reardon, and the United States Commission on Civil Rights.
+# Resegregation
